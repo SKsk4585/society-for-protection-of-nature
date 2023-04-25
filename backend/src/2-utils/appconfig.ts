@@ -2,7 +2,7 @@ class AppConfig{
     public host = "localhost"
     public user = "root"
     public password = ""
-    public database = "protection-of-tatrue"
+    public database = "protection-of-neture"
     public port = 3001
 }
 
