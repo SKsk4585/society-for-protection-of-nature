@@ -38,4 +38,16 @@ router.post("/travel-place",async (request:Request,response:Response,next:NextFu
     }
 })
 
+//delete
+router.delete("/travel-place/:id",async (request:Request,response:Response,next:NextFunction)=>{
+    try {
+        const travelId = +request.params.id
+        await travelPlaceLogic.deleteTravel(travelId)
+        response.sendStatus(204)
+    } 
+    catch (error) {
+        next(error)        
+    }
+})
+
 export default router

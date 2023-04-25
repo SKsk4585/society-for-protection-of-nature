@@ -2,6 +2,7 @@ import { OkPacket } from "mysql"
 import dal from "../2-utils/dal"
 import AreaModel from "../4-models/area-model"
 import TravelPlaceModel from "../4-models/travel-place-model"
+import { ResouceNotFoundErrorModel } from "../4-models/error-model"
 
 
 async function getAllArea(): Promise<AreaModel[]>{
@@ -34,11 +35,21 @@ async function addTravelPlace(travelPlace:TravelPlaceModel): Promise<TravelPlace
         return travelPlace
 }
 
+async function deleteTravel(id:number):Promise<void>{
+    const sql = `DELETE FROM travelplace
+                 WHERE travelPlaceId = ${id}`
+    const info:OkPacket = await dal.execute(sql)
+    if(info.affectedRows === 0) throw new ResouceNotFoundErrorModel(id)
+
+}
+
+
 
 
 export default {
     getAllArea,
     getPlaceByAreaId,
-    addTravelPlace
+    addTravelPlace,
+    deleteTravel
 
 } 
