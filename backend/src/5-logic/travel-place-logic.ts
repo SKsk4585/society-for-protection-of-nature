@@ -15,30 +15,25 @@ async function getPlaceByAreaId(areaId:number): Promise<TravelPlaceModel[]>{
     const sql = `SELECT T.*, A.areaName
                  FROM travelplace AS T JOIN area AS A
                  ON T.areaId = A.areaId
-                 WHERE T.areaId = ${areaId}`
-    const travelplace = await dal.execute(sql)
+                 WHERE T.areaId = ?`
+    const travelplace = await dal.execute(sql,[areaId])
     return travelplace
 
 }
 async function addTravelPlace(travelPlace:TravelPlaceModel): Promise<TravelPlaceModel>{
     const sql = `INSERT INTO travelplace 
                 VALUES(DEFAULT,
-                    ${travelPlace.areaId},
-                    '${travelPlace.name}',
-                    '${travelPlace.description}',
-                    ${travelPlace.priceOfChild},
-                    ${travelPlace.priceOfAdult},
-                    ${travelPlace.discount}
-            )`
-        const info:OkPacket = await dal.execute(sql)
+                    ?,?,?,?,?,?
+                    )`
+        const info:OkPacket = await dal.execute(sql[travelPlace.areaId,travelPlace.name,travelPlace.description,travelPlace.priceOfChild,travelPlace.priceOfAdult,travelPlace.discount])
         travelPlace.travelPlaceId = info.insertId
         return travelPlace
 }
 
 async function deleteTravel(id:number):Promise<void>{
     const sql = `DELETE FROM travelplace
-                 WHERE travelPlaceId = ${id}`
-    const info:OkPacket = await dal.execute(sql)
+                 WHERE travelPlaceId =?`
+    const info:OkPacket = await dal.execute(sql,[id])
     if(info.affectedRows === 0) throw new ResouceNotFoundErrorModel(id)
 
 }

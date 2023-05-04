@@ -1,3 +1,4 @@
+
 import mysql from "mysql"
 import appConfig from "./appconfig"
 
@@ -8,9 +9,9 @@ const conection = mysql.createPool({
     database:appConfig.database
 })
 
-function execute(sql:string):Promise<any>{
+function execute(sql:string,values?:any[]):Promise<any>{
     return new Promise<any>((resolve,reject)=>{
-        conection.query(sql,((err,resoult)=>{
+        conection.query(sql,values, ((err,resoult)=>{
             if(err){
                 reject(err)
                 return

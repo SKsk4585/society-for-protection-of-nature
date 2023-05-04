@@ -34,9 +34,10 @@ router.post("/travel-place",async (request:Request,response:Response,next:NextFu
         response.status(201).json(addedTravelaplace)
     } 
     catch (error) {
-        next(error)        
-    }
-})
+        next(error) 
+       }
+               
+    })
 
 //delete
 router.delete("/travel-place/:id",async (request:Request,response:Response,next:NextFunction)=>{
